@@ -33,9 +33,6 @@ authRouter.post("/api/signup", async (req, res) => {
   }
 });
 
-
-
-
 // Sign In Route
 // Exercise
 authRouter.post("/api/signin", async (req, res) => {
