@@ -26,7 +26,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-
+  bool isLoding = false;
   @override
   void dispose() {
     super.dispose();
@@ -36,20 +36,32 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void signUpUser() {
+    setState(() {
+      isLoding = true;
+    });
     authService.signUpUser(
       context: context,
       email: _emailController.text,
       password: _passwordController.text,
       name: _nameController.text,
     );
+    setState(() {
+      isLoding = false;
+    });
   }
 
   void signInUser() {
+    setState(() {
+      isLoding = true;
+    });
     authService.signInUser(
       context: context,
       email: _emailController.text,
       password: _passwordController.text,
     );
+    setState(() {
+      isLoding = false;
+    });
   }
 
   @override
@@ -116,6 +128,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         CustomButton(
                           //color: GlobalVariables.secondaryColor,
                           text: 'Sign Up',
+
                           onTap: () {
                             if (_signUpFormKey.currentState!.validate()) {
                               signUpUser();
