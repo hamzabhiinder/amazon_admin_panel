@@ -36,32 +36,20 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void signUpUser() {
-    setState(() {
-      isLoding = true;
-    });
     authService.signUpUser(
       context: context,
       email: _emailController.text,
       password: _passwordController.text,
       name: _nameController.text,
     );
-    setState(() {
-      isLoding = false;
-    });
   }
 
   void signInUser() {
-    setState(() {
-      isLoding = true;
-    });
     authService.signInUser(
       context: context,
       email: _emailController.text,
       password: _passwordController.text,
     );
-    setState(() {
-      isLoding = false;
-    });
   }
 
   @override
@@ -128,9 +116,12 @@ class _AuthScreenState extends State<AuthScreen> {
                         CustomButton(
                           //color: GlobalVariables.secondaryColor,
                           text: 'Sign Up',
-
+                          isLoading: isLoding,
                           onTap: () {
                             if (_signUpFormKey.currentState!.validate()) {
+                              setState(() {
+                                isLoding = true;
+                              });
                               signUpUser();
                             }
                           },
@@ -179,9 +170,13 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         const SizedBox(height: 10),
                         CustomButton(
+                          isLoading: isLoding,
                           text: 'Sign In',
                           onTap: () {
                             if (_signInFormKey.currentState!.validate()) {
+                              setState(() {
+                                isLoding = true;
+                              });
                               signInUser();
                             }
                           },

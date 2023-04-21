@@ -13,6 +13,7 @@ import '../../../model/productModel.dart';
 import '../../../provider/user_provider.dart';
 
 class AdminServices {
+  
   void sellProduct({
     required BuildContext context,
     required String name,
@@ -24,6 +25,7 @@ class AdminServices {
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
+      
       final cloudinary = CloudinaryPublic('dfoqnku2j', 'p5zszud7');
       List<String> imageUrl = [];
 

@@ -6,6 +6,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/custom_textfield.dart';
+import '../../../common/round_button.dart';
 import '../../../constant/global_variable.dart';
 import '../../../constant/utils.dart';
 import '../services/admin_services.dart';
@@ -52,8 +53,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
     });
   }
 
+  bool isLoaded = false;
   void sellProduct() {
     if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      setState(() {
+        isLoaded = true;
+      });
       adminServices.sellProduct(
         context: context,
         name: productNameController.text,
@@ -153,10 +158,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
-                    controller: _priceController, hintText: "Price"),
+                  controller: _priceController,
+                  hintText: "Price",
+                  textType: TextInputType.number,
+                ),
                 const SizedBox(height: 10),
                 CustomTextField(
-                    controller: _quantityController, hintText: "quantity"),
+                  textType: TextInputType.number,
+                  controller: _quantityController,
+                  hintText: "quantity",
+                ),
                 const SizedBox(height: 10),
                 SizedBox(
                   width: double.infinity,
@@ -178,8 +189,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomButton(
-                  onTap: sellProduct,
+                  onTap: () {
+                    // setState(() {
+                    //   isLoaded = true;
+                    // });
+                    sellProduct();
+                  },
                   text: "Sell",
+                  isLoading: isLoaded,
                 )
               ],
             ),
