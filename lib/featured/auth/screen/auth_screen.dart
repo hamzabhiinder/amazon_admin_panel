@@ -178,6 +178,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 isLoding = true;
                               });
                               signInUser();
+                              
                             }
                           },
                         )

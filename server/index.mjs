@@ -17,6 +17,6 @@ app.use(express.json())
 app.use(authRouter)
 
 
-app.listen(port, "0.0.0.0", () => {
+app.listen(port, () => {
     console.log(`Example app listening on port ${port} `)
 })

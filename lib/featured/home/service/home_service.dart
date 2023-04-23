@@ -44,7 +44,7 @@ class HomeServices {
             }
           });
     } catch (e) {
-      log("Error:From Get Products   $e");
+      log("Error:From Get Products Home   $e");
       showSnackBar(context, "$e");
     }
     return productList;

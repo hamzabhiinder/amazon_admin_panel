@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String uri = //"https://3817-39-51-70-49.ngrok.io";
+String uri = //"https://410f-39-51-23-104.ngrok.io";
     'https://fantastic-flannel-nightgown-colt.cyclic.app';
 
 class GlobalVariables {

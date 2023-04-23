@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:admin_panel/model/productModel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import '../../../common/customButton.dart';
 import '../../../common/star.dart';
 import '../../../constant/global_variable.dart';
 import '../../search/screen/search_screen.dart';
+import '../services/product_detail_services.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   static const String routeName = '/product-details';
@@ -23,8 +26,7 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  // final ProductDetailsServices productDetailsServices =
-  //     ProductDetailsServices();
+  ProductDetailsServices productDetailsServices = ProductDetailsServices();
   double avgRating = 0;
   double myRating = 0;
 
@@ -254,11 +256,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 color: GlobalVariables.secondaryColor,
               ),
               onRatingUpdate: (rating) {
-                // productDetailsServices.rateProduct(
-                //   context: context,
-                //   product: widget.product,
-                //   rating: rating,
-                // );
+                log("Product Model updated ${widget.product.toJson()}");
+                productDetailsServices.rateProduct(
+                  context: context,
+                  product: widget.product,
+                  rating: rating,
+                );
               },
             )
           ],
