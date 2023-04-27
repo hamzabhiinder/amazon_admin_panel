@@ -2,7 +2,7 @@ import express from "express";
 const adminRouter = express.Router();
 
 import admin from "../../middleware/admin.mjs";
-import Product from "../Model/productModel.mjs";
+import {Product} from "../Model/productModel.mjs";
 
 
 //Add Product

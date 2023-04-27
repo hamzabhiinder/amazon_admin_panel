@@ -12,14 +12,14 @@ class SearchedProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // double totalRating = 0;
-    // for (int i = 0; i < product.rating!.length; i++) {
-    //   totalRating += product.rating![i].rating;
-    // }
-    // double avgRating = 0;
-    // if (totalRating != 0) {
-    //   avgRating = totalRating / product.rating!.length;
-    // }
+    double totalRating = 0;
+    for (int i = 0; i < product.rating!.length; i++) {
+      totalRating += product.rating![i].rating;
+    }
+    double avgRating = 0;
+    if (totalRating != 0) {
+      avgRating = totalRating / product.rating!.length;
+    }  
     final size = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -52,7 +52,7 @@ class SearchedProduct extends StatelessWidget {
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
                     child: Stars(
-                      rating: 3,
+                      rating: avgRating,
                     ),
                   ),
                   Container(

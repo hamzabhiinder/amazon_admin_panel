@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-String uri = //"https://410f-39-51-23-104.ngrok.io";
-    'https://fantastic-flannel-nightgown-colt.cyclic.app';
+String uri = //"https://lazy-blue-meerkat-coat.cyclic.app";
+    'http://9fcc-39-51-108-110.ngrok.io';
 
 class GlobalVariables {
   // COLORS
