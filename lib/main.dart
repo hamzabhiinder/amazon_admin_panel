@@ -1,5 +1,6 @@
 import 'package:admin_panel/common/bottom_bar.dart';
 import 'package:admin_panel/featured/auth/screen/auth_screen.dart';
+import 'package:admin_panel/featured/cart/screen/cart_screen.dart';
 import 'package:admin_panel/featured/home/screen/home_screen.dart';
 import 'package:admin_panel/provider/user_provider.dart';
 import 'package:admin_panel/routes.dart';
@@ -50,13 +51,14 @@ class _MyAppState extends State<MyApp> {
         ),
         appBarTheme: const AppBarTheme(
           elevation: 0,
-         
           iconTheme: IconThemeData(
             color: Colors.black,
           ),
         ),
       ),
       onGenerateRoute: (settings) => generateRoutes(settings),
+
+      // home: CartScreen(),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
           ? Provider.of<UserProvider>(context).user.type == "user"
               ? const BottomBar()

@@ -5,6 +5,8 @@ import 'package:admin_panel/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../services/cart_services.dart';
+
 class CartProduct extends StatefulWidget {
   final int index;
   const CartProduct({
@@ -18,9 +20,14 @@ class CartProduct extends StatefulWidget {
 
 class _CartProductState extends State<CartProduct> {
   ProductDetailsServices productDetailsServices = ProductDetailsServices();
+  final CartServices cartServices = CartServices();
 
   void increaseQuantity(ProductModel product) {
     productDetailsServices.addToCart(context: context, product: product);
+  }
+
+  void decreaseQuantity(ProductModel product) {
+    cartServices.removeFromCart(context: context, product: product);
   }
 
   @override
@@ -105,13 +112,16 @@ class _CartProductState extends State<CartProduct> {
                 ),
                 child: Row(
                   children: [
-                    Container(
-                      height: 32,
-                      width: 35,
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Icons.remove,
-                        size: 18,
+                    InkWell(
+                      onTap: () => decreaseQuantity(product),
+                      child: Container(
+                        height: 32,
+                        width: 35,
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Icons.remove,
+                          size: 18,
+                        ),
                       ),
                     ),
                     DecoratedBox(
