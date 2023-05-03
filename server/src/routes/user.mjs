@@ -106,14 +106,26 @@ userRouter.post('/api/order', auth, async (req, res) => {
             userId: req.user,
             orderedAt: new Date().getTime(),
         })
-order =await order.save();
+        order = await order.save();
         res.json(order);
-    
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message });
     }
 })
 
+
+//get all orders for me
+
+userRouter.get('api/orders/me', auth, async (req, res) => {
+    try {
+        const products = await Order.find({ userId: req.user });
+        res.json(products);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+})
 
 export default userRouter;

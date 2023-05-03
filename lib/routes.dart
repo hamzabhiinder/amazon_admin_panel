@@ -1,6 +1,8 @@
 import 'package:admin_panel/common/bottom_bar.dart';
 import 'package:admin_panel/featured/admin/screen/add_product_screen.dart';
 import 'package:admin_panel/featured/home/screen/home_screen.dart';
+import 'package:admin_panel/featured/order_detail/screen/order_detail_screen.dart';
+import 'package:admin_panel/model/orderModel.dart';
 import 'package:admin_panel/model/productModel.dart';
 import 'package:flutter/material.dart';
 
@@ -56,6 +58,14 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => ProductDetailScreen(
           product: product,
+        ),
+      );
+    case OrderDetailScreen.routeName:
+      var order = routeSettings.arguments as OrderModel;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => OrderDetailScreen(
+          order: order,
         ),
       );
     case AddressScreen.routeName:
