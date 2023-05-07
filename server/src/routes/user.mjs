@@ -77,6 +77,9 @@ userRouter.post('/api/save-user-address', auth, async (req, res) => {
 })
 
 
+
+
+
 //order Product
 
 userRouter.post('/api/order', auth, async (req, res) => {
@@ -116,16 +119,22 @@ userRouter.post('/api/order', auth, async (req, res) => {
 })
 
 
+
 //get all orders for me
 
-userRouter.get('api/orders/me', auth, async (req, res) => {
+userRouter.get("/api/orders/me", auth, async (req, res) => {
     try {
-        const products = await Order.find({ userId: req.user });
-        res.json(products);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
+        console.log(req.user)
+        const orders = await Order.find({ userId: req.user });
+       
+
+        res.json(orders);
+
+    } catch (e) {
+        res.status(500).json({ error: e.message });
     }
-})
+});
+
+
 
 export default userRouter;

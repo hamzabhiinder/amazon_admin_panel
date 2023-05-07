@@ -11,7 +11,7 @@ import userRouter from "./src/routes/user.mjs";
 
 
 const app = express();
-const port = 8001
+const port = 3000
 
 
 app.use(cors())
