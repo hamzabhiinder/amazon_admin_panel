@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:admin_panel/constant/error_handling.dart';
+import 'package:admin_panel/model/orderModel.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -11,9 +12,9 @@ import '../../../constant/global_variable.dart';
 import '../../../constant/utils.dart';
 import '../../../model/productModel.dart';
 import '../../../provider/user_provider.dart';
+import '../model/sale_model.dart';
 
 class AdminServices {
-  
   void sellProduct({
     required BuildContext context,
     required String name,
@@ -25,7 +26,6 @@ class AdminServices {
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      
       final cloudinary = CloudinaryPublic('dfoqnku2j', 'p5zszud7');
       List<String> imageUrl = [];
 
@@ -127,5 +127,108 @@ class AdminServices {
       log("Error:From Delete Products   $e");
       showSnackBar(context, "$e");
     }
+  }
+
+  Future<List<OrderModel>> fetchAllOrder(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<OrderModel> orderList = [];
+    try {
+      http.Response response = await http.get(
+        Uri.parse('$uri/admin/get-orders'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      log('For checing ${userProvider.user.token}');
+      log("jsonDecode(response.body).length ${jsonDecode(response.body).length}");
+      httpErrorHandling(
+          response: response,
+          context: context,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(response.body).length; i++) {
+              orderList.add(
+                OrderModel.fromJson(
+                  jsonEncode(
+                    jsonDecode(response.body.toString())[i],
+                  ),
+                ),
+              );
+            }
+          });
+    } catch (e) {
+      log("Error:From Get Products   $e");
+      showSnackBar(context, "$e");
+    }
+    return orderList;
+  }
+
+  void changeOrderStatus(
+      {required BuildContext context,
+      required int status,
+      required OrderModel order,
+      required VoidCallback onSuccess}) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$uri/admin/change-order-status'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'id': order.id,
+          'status': status,
+        }),
+      );
+
+      httpErrorHandling(
+        response: response,
+        context: context,
+        onSuccess: onSuccess,
+      );
+    } catch (e) {
+      log("Error:From Delete Products   $e");
+      showSnackBar(context, "$e");
+    }
+  }
+
+  Future<Map<String, dynamic>> getEarning(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Sales> sales = [];
+    int totalEarning = 0;
+    try {
+      http.Response res = await http.get(
+        Uri.parse('$uri/admin/analytics'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandling(
+          response: res,
+          context: context,
+          onSuccess: () {
+            var response = jsonDecode(res.body);
+            totalEarning = response['totalEarnings'];
+            sales = [
+              Sales(label: "Mobiles", earning: response['mobileEarning']),
+              Sales(label: "Essentials", earning: response['essentialEarning']),
+              Sales(label: "Appliances", earning: response['applianceEarning']),
+              Sales(label: "Books", earning: response['bookEarning']),
+              Sales(label: "Fashion", earning: response['fashionEarning']),
+            ];
+          });
+    } catch (e) {
+      log("Error:From Get Products   $e");
+      showSnackBar(context, "$e");
+    }
+
+    return {
+      'sales': sales,
+      'totalEarning': totalEarning,
+    };
   }
 }

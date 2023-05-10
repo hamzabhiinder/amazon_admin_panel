@@ -1,5 +1,9 @@
+import 'package:admin_panel/common/customButton.dart';
+import 'package:admin_panel/featured/admin/services/admin_services.dart';
+import 'package:admin_panel/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../../../constant/global_variable.dart';
 import '../../../model/orderModel.dart';
 import '../../search/screen/search_screen.dart';
@@ -14,12 +18,35 @@ class OrderDetailScreen extends StatefulWidget {
 }
 
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
+  int currentStep = 0;
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
 
+  AdminServices adminServices = AdminServices();
+  @override
+  void initState() {
+    super.initState();
+    currentStep = widget.order.status;
+  }
+
+  ////!!!!ONLY FOR ADMIN!!!!////////////
+  void changeOrderStatus(int status) {
+    adminServices.changeOrderStatus(
+      context: context,
+      status: status + 1,
+      order: widget.order,
+      onSuccess: () {
+        setState(() {
+          currentStep += 1;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -104,7 +131,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     border: Border.all(
                   color: Colors.black12,
@@ -115,7 +142,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     Text(
                       "Order Date:          ${DateFormat().format(
                         DateTime.fromMillisecondsSinceEpoch(
-                            widget.order.orderedAt),
+                            int.parse(widget.order.orderedAt)),
                       )}",
                     ),
                     Text("Order ID:           ${widget.order.id}"),
@@ -133,7 +160,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     border: Border.all(
                   color: Colors.black12,
@@ -156,7 +183,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                               children: [
                                 Text(
                                   widget.order.products[i].name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -169,6 +196,71 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           ),
                         ],
                       )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Tracking',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                  color: Colors.black12,
+                )),
+                child: Stepper(
+                  currentStep: currentStep,
+                  controlsBuilder: (context, details) {
+                    if (user.type == "admin") {
+                      return CustomButton(
+                        text: "Done",
+                        onTap: () => changeOrderStatus(details.currentStep),
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                  steps: [
+                    Step(
+                      title: const Text("Pending"),
+                      content:
+                          const Text("Your Order has yet to be delivered!"),
+                      isActive: currentStep > 0,
+                      state: currentStep > 0
+                          ? StepState.complete
+                          : StepState.indexed,
+                    ),
+                    Step(
+                      title: const Text("Complete"),
+                      content: const Text(
+                          "Your Order has been delivered, you are yet to sign it!"),
+                      isActive: currentStep > 1,
+                      state: currentStep > 1
+                          ? StepState.complete
+                          : StepState.indexed,
+                    ),
+                    Step(
+                      title: const Text("Recieved"),
+                      content: const Text(
+                          "Your Order has been delivered and Signed by You!"),
+                      isActive: currentStep > 2,
+                      state: currentStep > 2
+                          ? StepState.complete
+                          : StepState.indexed,
+                    ),
+                    Step(
+                      title: const Text("Delivered"),
+                      content: const Text("Your Order has delivered!"),
+                      isActive: currentStep >= 3,
+                      state: currentStep > 3
+                          ? StepState.complete
+                          : StepState.indexed,
+                    ),
                   ],
                 ),
               ),

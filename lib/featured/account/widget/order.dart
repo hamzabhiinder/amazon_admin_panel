@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:admin_panel/common/loader.dart';
 import 'package:admin_panel/featured/account/services/account_services.dart';
 import 'package:admin_panel/featured/account/widget/single_product.dart';
@@ -16,7 +18,7 @@ class Order extends StatefulWidget {
 
 class _OrderState extends State<Order> {
   List<OrderModel>? order;
-  AccountService accountService = AccountService();
+  final AccountService accountService = AccountService();
   @override
   void initState() {
     // TODO: implement initState
@@ -26,6 +28,7 @@ class _OrderState extends State<Order> {
 
   void fetchOrder() async {
     order = await accountService.fetchMyOrder(context: context);
+    log("Order .length = ${order!.length}");
     setState(() {});
   }
 

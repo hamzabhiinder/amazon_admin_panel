@@ -1,15 +1,10 @@
-
+import 'package:admin_panel/featured/account/services/account_services.dart';
 import 'package:admin_panel/featured/account/widget/account_button.dart';
 import 'package:flutter/cupertino.dart';
 
-class TopButtonAccount extends StatefulWidget {
+class TopButtonAccount extends StatelessWidget {
   const TopButtonAccount({super.key});
 
-  @override
-  State<TopButtonAccount> createState() => _TopButtonAccountState();
-}
-
-class _TopButtonAccountState extends State<TopButtonAccount> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,7 +18,8 @@ class _TopButtonAccountState extends State<TopButtonAccount> {
         SizedBox(height: 10),
         Row(
           children: [
-            AccountButton(text: "Log Out", onTap: () {}),
+            AccountButton(
+                text: "Log Out", onTap: () => AccountService().logOut(context)),
             AccountButton(text: "Your Wish List", onTap: () {}),
           ],
         ),

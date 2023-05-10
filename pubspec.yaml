@@ -44,6 +44,7 @@ dependencies:
   pay: ^1.1.1
   provider: ^6.0.5
   shared_preferences: ^2.0.18
+  syncfusion_flutter_charts: ^21.2.3
 
 
 

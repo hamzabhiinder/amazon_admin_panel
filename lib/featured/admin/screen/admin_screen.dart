@@ -1,3 +1,5 @@
+import 'package:admin_panel/featured/admin/screen/analytic_screen.dart';
+import 'package:admin_panel/featured/admin/screen/order_Screen.dart';
 import 'package:admin_panel/featured/admin/screen/post_screen.dart';
 import 'package:badges/badges.dart' as b;
 import 'package:flutter/material.dart';
@@ -24,8 +26,8 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List pages = [
     const PostsScreen(),
-    const Center(child: Text("Shopping Page")),
-    const Center(child: Text("Shopping Page")),
+    AnalyticalScreen(),
+    OrderScreen(),
   ];
 
   @override
