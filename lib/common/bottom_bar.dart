@@ -95,7 +95,7 @@ class _BottomBarState extends State<BottomBar> {
                   child: Icon(Icons.shopping_cart_outlined)),
             ),
             label: "Cart",
-          )
+          ),
         ],
       ),
     );
