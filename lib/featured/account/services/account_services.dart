@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:admin_panel/featured/auth/screen/auth_screen.dart';
+import 'package:admin_panel/featured/auth/screen/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -72,7 +73,7 @@ class AccountService {
       await pref.setString("x-auth-token", "");
       Navigator.pushNamedAndRemoveUntil(
         context,
-        AuthScreen.routeName,
+        LoginScreen.routeName,
         (route) => false,
       );
     } catch (e) {

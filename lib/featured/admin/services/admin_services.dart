@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:admin_panel/common/loader.dart';
 import 'package:admin_panel/constant/error_handling.dart';
+import 'package:admin_panel/featured/admin/screen/post_screen.dart';
 import 'package:admin_panel/model/orderModel.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
+import '../../../common/loader.dart';
+import '../../../common/loader.dart';
 import '../../../constant/global_variable.dart';
 import '../../../constant/utils.dart';
 import '../../../model/productModel.dart';
@@ -25,7 +29,9 @@ class AdminServices {
     required List<File> images,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final showLoader = Provider.of<ShowLoader>(context, listen: false);
     try {
+      showLoader.setIsSignInLoading(true);
       final cloudinary = CloudinaryPublic('dfoqnku2j', 'p5zszud7');
       List<String> imageUrl = [];
 
@@ -58,9 +64,15 @@ class AdminServices {
           context: context,
           onSuccess: () {
             showSnackBar(context, "Product Added Success");
-            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => PostsScreen()),
+                (route) => false);
           });
+      showLoader.setIsSignInLoading(false);
     } catch (e) {
+      showLoader.setIsSignInLoading(false);
+
       log("Error: $e");
       showSnackBar(context, "$e");
     }

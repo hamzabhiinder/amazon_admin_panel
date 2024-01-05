@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:admin_panel/model/userModel.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../../../constant/error_handling.dart';
@@ -9,6 +9,7 @@ import '../../../constant/global_variable.dart';
 import '../../../constant/utils.dart';
 import '../../../model/productModel.dart';
 import '../../../provider/user_provider.dart';
+import '../../cart/screen/cart_screen.dart';
 
 class ProductDetailsServices {
   void addToCart({
@@ -35,6 +36,8 @@ class ProductDetailsServices {
             cart: jsonDecode(response.body)['cart'],
           );
           userProvider.setUserFromModel(user);
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (_) => const CartScreen()));
         },
       );
     } catch (e) {

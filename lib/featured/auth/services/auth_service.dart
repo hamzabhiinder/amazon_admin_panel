@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:admin_panel/common/bottom_bar.dart';
+import 'package:admin_panel/common/loader.dart';
 import 'package:admin_panel/constant/error_handling.dart';
 import 'package:admin_panel/constant/global_variable.dart';
-import 'package:admin_panel/featured/home/screen/home_screen.dart';
 import 'package:admin_panel/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,10 @@ class AuthService {
     required String name,
     required BuildContext context,
   }) async {
+    final providers = Provider.of<ShowLoader>(context, listen: false);
     try {
+      providers.setIsSignInLoading(true);
+
       User user = User(
         id: "",
         name: name,
@@ -54,9 +57,15 @@ class AuthService {
             context,
             'Account created! Login with the same credentials!',
           );
+          email = "";
+          password = "";
+          name = "";
         },
       );
+      providers.setIsSignInLoading(false);
     } catch (e) {
+      providers.setIsSignInLoading(false);
+
       showSnackBar(context, e.toString());
     }
   }
@@ -67,8 +76,9 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    final providers = Provider.of<ShowLoader>(context, listen: false);
     try {
-      
+      providers.setIsSignInLoading(true);
       http.Response res = await http.post(
         Uri.parse('$uri/api/signin'),
         body: jsonEncode({
@@ -86,6 +96,8 @@ class AuthService {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          providers.setIsSignInLoading(false);
+
           Navigator.pushNamedAndRemoveUntil(
             context,
             BottomBar.routeName,
@@ -93,7 +105,10 @@ class AuthService {
           );
         },
       );
+      providers.setIsSignInLoading(false);
     } catch (e) {
+      providers.setIsSignInLoading(false);
+
       showSnackBar(context, e.toString());
     }
   }

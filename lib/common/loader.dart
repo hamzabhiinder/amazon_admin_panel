@@ -10,3 +10,20 @@ class Loader extends StatelessWidget {
     );
   }
 }
+
+class ShowLoader extends ChangeNotifier {
+  // bool isSignUpLoading = false;
+
+  // void setIsSignUpLoading(bool isSignUpLoading) {
+  //   this.isSignUpLoading   notifyListeners();
+  //notifyListeners();
+
+  // }
+
+  bool isSignInLoading = false;
+
+  void setIsSignInLoading(bool isSignInLoading) {
+    this.isSignInLoading = isSignInLoading;
+    notifyListeners();
+  }
+}

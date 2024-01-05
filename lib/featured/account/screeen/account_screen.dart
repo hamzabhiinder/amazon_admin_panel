@@ -26,9 +26,9 @@ class AccountScreen extends StatelessWidget {
               Container(
                 alignment: Alignment.topLeft,
                 child: Image.asset(
-                  "assets/images/amazon_in.png",
+                  "assets/images/sport_wear.png",
                   width: 120,
-                  height: 45,
+                  height: 55,
                   color: Colors.black,
                 ),
               ),

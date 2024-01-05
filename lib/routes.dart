@@ -1,5 +1,6 @@
 import 'package:admin_panel/common/bottom_bar.dart';
 import 'package:admin_panel/featured/admin/screen/add_product_screen.dart';
+import 'package:admin_panel/featured/auth/screen/sign_in_screen.dart';
 import 'package:admin_panel/featured/home/screen/home_screen.dart';
 import 'package:admin_panel/featured/order_detail/screen/order_detail_screen.dart';
 import 'package:admin_panel/model/orderModel.dart';
@@ -18,6 +19,11 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const AuthScreen(),
+      );
+    case LoginScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const LoginScreen(),
       );
     case HomeScreen.routeName:
       return MaterialPageRoute(

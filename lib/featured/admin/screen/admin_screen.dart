@@ -5,6 +5,7 @@ import 'package:badges/badges.dart' as b;
 import 'package:flutter/material.dart';
 
 import '../../../constant/global_variable.dart';
+import '../../account/services/account_services.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({Key? key}) : super(key: key);
@@ -42,17 +43,18 @@ class _AdminScreenState extends State<AdminScreen> {
             ),
           ),
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
                 alignment: Alignment.topLeft,
                 child: Image.asset(
-                  "assets/images/amazon_in.png",
-                  width: 120,
+                  "assets/images/sport_wear.png",
+                  width: 100,
                   height: 45,
                   color: Colors.black,
                 ),
               ),
+              SizedBox(width: 20),
               const Text(
                 "Admin",
                 style: TextStyle(
@@ -60,9 +62,14 @@ class _AdminScreenState extends State<AdminScreen> {
                   fontSize: 26,
                   color: Colors.black,
                 ),
-              )
+              ),
             ],
           ),
+          actions: [
+            IconButton(
+                onPressed: () => AccountService().logOut(context),
+                icon: Icon(Icons.exit_to_app))
+          ],
         ),
       ),
       body: pages[_page],

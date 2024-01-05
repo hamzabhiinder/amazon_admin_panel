@@ -52,8 +52,19 @@ class _CategoryScreenDealState extends State<CategoryScreenDeal> {
       ),
       body: (productList == null ||
               productList!.isEmpty ||
+              //  productList!.length == 0 ||
               productList == "null")
-          ? const Loader()
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                productList != null
+                    ? const Image(
+                        image: AssetImage("assets/images/no_product.png"),
+                        height: 300,
+                      )
+                    : const Loader()
+              ],
+            ) //Loader()
           : Column(
               children: [
                 Container(

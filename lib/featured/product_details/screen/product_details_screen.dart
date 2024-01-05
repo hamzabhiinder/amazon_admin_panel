@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:admin_panel/featured/cart/screen/cart_screen.dart';
 import 'package:admin_panel/model/productModel.dart';
 import 'package:admin_panel/provider/user_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -56,6 +58,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       context: context,
       product: widget.product,
     );
+  }
+
+  void buyNowBtn() {
+    productDetailsServices.addToCart(
+      context: context,
+      product: widget.product,
+    );
+    
   }
 
   @override
@@ -113,7 +123,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             width: 1,
                           ),
                         ),
-                        hintText: 'Search Amazon.in',
+                        hintText: 'Search Shop Wear',
                         hintStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,
@@ -217,7 +227,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               padding: const EdgeInsets.all(10),
               child: CustomButton(
                 text: 'Buy Now',
-                onTap: () {},
+                onTap: buyNowBtn,
               ),
             ),
             const SizedBox(height: 10),

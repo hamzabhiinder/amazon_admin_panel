@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 
-String uri = //"https://lazy-blue-meerkat-coat.cyclic.app";
-    'https://dd17-39-51-35-32.ngrok.io';
+String uri = //"http://localhost:3000";
+    'https://tense-duck-sari.cyclic.app/';
 
 class GlobalVariables {
   // COLORS
   static const appBarGradient = LinearGradient(
+    // colors: [
+    //   Color.fromARGB(255, 29, 201, 192),
+    //   Color.fromARGB(255, 125, 221, 216),
+    // ],
     colors: [
-      Color.fromARGB(255, 29, 201, 192),
-      Color.fromARGB(255, 125, 221, 216),
+      Color.fromARGB(255, 240, 51, 51),
+      Color.fromARGB(255, 197, 44, 44),
     ],
     stops: [0.5, 1.0],
   );
 
-  static const secondaryColor = Color.fromRGBO(255, 153, 0, 1);
+  static const secondaryColor =
+      Color(0xFF800000); //Color.fromRGBO(255, 153, 0, 1);
   static const backgroundColor = Colors.white;
   static const Color greyBackgroundCOlor = Color(0xffebecee);
   static var selectedNavBarColor = Colors.cyan[800]!;
@@ -39,7 +44,7 @@ class GlobalVariables {
     },
     {
       'title': 'Appliances',
-      'image': 'assets/images/appliances.jpeg',
+      'image': 'assets/images/football.png',
     },
     {
       'title': 'Books',

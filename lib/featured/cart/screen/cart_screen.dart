@@ -1,5 +1,4 @@
 import 'package:admin_panel/common/customButton.dart';
-import 'package:admin_panel/featured/cart/services/cart_services.dart';
 import 'package:admin_panel/featured/cart/widget/cart_product.dart';
 import 'package:admin_panel/featured/cart/widget/cart_sub_total.dart';
 import 'package:admin_panel/featured/home/widgets/adress_box.dart';
@@ -83,7 +82,7 @@ class _CartScreenState extends State<CartScreen> {
                               width: 1,
                             ),
                           ),
-                          hintText: "Search Amazon.in",
+                          hintText: "Search Shop Wear",
                           hintStyle: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 17,

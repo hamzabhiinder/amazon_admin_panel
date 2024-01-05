@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/customButton.dart';
 import '../../../common/custom_textfield.dart';
+import '../../../common/loader.dart';
 import '../../../constant/global_variable.dart';
 import '../services/auth_service.dart';
 
@@ -170,13 +172,12 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         const SizedBox(height: 10),
                         CustomButton(
-                          isLoading: isLoding,
+                          isLoading:  Provider.of<ShowLoader>(context, listen: false).isSignInLoading,
+
                           text: 'Sign In',
                           onTap: () {
                             if (_signInFormKey.currentState!.validate()) {
-                              setState(() {
-                                isLoding = true;
-                              });
+                             
                               signInUser();
                               
                             }

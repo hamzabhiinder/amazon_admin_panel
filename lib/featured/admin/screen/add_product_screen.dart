@@ -4,8 +4,10 @@ import 'package:admin_panel/common/customButton.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/custom_textfield.dart';
+import '../../../common/loader.dart';
 import '../../../common/round_button.dart';
 import '../../../constant/global_variable.dart';
 import '../../../constant/utils.dart';
@@ -53,12 +55,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
     });
   }
 
-  bool isLoaded = false;
   void sellProduct() {
     if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
-      setState(() {
-        isLoaded = true;
-      });
       adminServices.sellProduct(
         context: context,
         name: productNameController.text,
@@ -73,6 +71,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final showLoader = Provider.of<ShowLoader>(context).isSignInLoading;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
@@ -190,13 +190,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 const SizedBox(height: 10),
                 CustomButton(
                   onTap: () {
-                    // setState(() {
-                    //   isLoaded = true;
-                    // });
                     sellProduct();
                   },
                   text: "Sell",
-                  isLoading: isLoaded,
+                  isLoading: showLoader,
                 )
               ],
             ),

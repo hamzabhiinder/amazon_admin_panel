@@ -37,9 +37,11 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       status: status + 1,
       order: widget.order,
       onSuccess: () {
-        setState(() {
-          currentStep += 1;
-        });
+        if (currentStep < 4) {
+          setState(() {
+            currentStep += 1;
+          });
+        }
       },
     );
   }
@@ -94,7 +96,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                               width: 1,
                             ),
                           ),
-                          hintText: "Search Amazon.in",
+                          hintText: "Search Shop Wear",
                           hintStyle: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 17,
